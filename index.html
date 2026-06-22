@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meine Streckenkarte</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com" />
+    <script src="https://unpkg.com"></script>
+    <style>
+        #map { height: 100vh; width: 100%; margin: 0; }
+        body { margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Karte initialisieren und auf einen bestimmten Bereich zentrieren
+        var map = L.map('map').setView([47.696, 8.718], 12); // Koordinaten (z.B. Hilzingen)
+
+        // OpenStreetMap Hintergrundkarte einbinden
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap-Mitwirkende'
+        }).addTo(map);
+
+        // GeoJSON-Strecke laden (ersetzen Sie 'route.geojson' mit Ihrer Dateinamen/URL)
+        fetch('route.geojson')
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    style: { color: "#ff0000", weight: 4, opacity: 0.7 } // Roter Strich
+                }).addTo(map);
+            });
+    </script>
+</body>
+</html>
